@@ -13,7 +13,7 @@ namespace PZ_01
             double a, b, c; //объявление переменных
             Console.Write("Введите число a(пи=pi): "); //ввод числа а
             string aInput = Console.ReadLine();
-            if (aInput.ToLower() == "pi") //проверка условия для расчетов  числом пи
+            if (aInput.ToLower() == "pi") //проверка условия для расчетов с числом пи
             {
                 Console.Write("Введите знаменатель числа pi(при его отсутствии писать 1): ");
                 double x = Convert.ToDouble(Console.ReadLine());
@@ -23,7 +23,7 @@ namespace PZ_01
 
             Console.Write("Введите число b(пи=pi): "); //ввод числа b
             string bInput = Console.ReadLine();
-            if (bInput.ToLower() == "pi") //проверка условия для расчетов  числом пи
+            if (bInput.ToLower() == "pi") //проверка условия для расчетов с числом пи
             {
                 Console.Write("Введите знаменатель числа pi(при его отсутствии писать 1): ");
                 double z = Convert.ToDouble(Console.ReadLine());
@@ -33,7 +33,7 @@ namespace PZ_01
 
             Console.Write("Введите число c(пи=pi): "); //ввод числа с
             string cInput = Console.ReadLine();
-            if (cInput.ToLower() == "pi") //проверка условия для расчетов  числом пи
+            if (cInput.ToLower() == "pi") //проверка условия для расчетов с числом пи
             {
                 Console.Write("Введите знаменатель числа pi(при его отсутствии писать 1): ");
                 double y = Convert.ToDouble(Console.ReadLine());
