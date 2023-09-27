@@ -10,7 +10,7 @@
             { array[i] = rnd.Next(0, 51); }
             Array.Sort(array, (i, j) => GetDigitsSum(i).CompareTo(GetDigitsSum(j)));// массив сортируется в порядке возрастания суммы цифр
 
-            static int GetDigitsSum(int number)// Метод для вычисления суммы цифр числа
+            static int GetDigitsSum(int number)//метод для вычисления суммы цифр числа
             {
                 int sum = 0;
                 while (number != 0)
@@ -18,7 +18,7 @@
                 return sum;
             }
 
-            foreach (int number in array)// Вывод элементов массива с суммой их цифр
+            foreach (int number in array)//вывод элементов массива с суммой их цифр
             {
                 int sum = GetDigitsSum(number);
                 Console.WriteLine($"{number} ( сумма цифр={sum})");
