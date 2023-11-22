@@ -8,7 +8,7 @@
             string input = Console.ReadLine();
             string output = string.Empty; //создание пустой строки для того, чтобы записать в нее полученное предложение 
 
-            for (int i = 0; i < input.Length; i++)//проход по каждому символу введенной строки с помощью цикла и массива
+            for (int i = 0; i < input.Length; i++)//проход по каждому символу введенной строки с помощью цикла и листа
             {
                 char c = input[i];
                 if (char.IsUpper(c) || char.IsDigit(c))//проверка, является ли символ заглавным или цифрой
