@@ -35,7 +35,7 @@
             Console.Write("Введите число n: ");
             int n_3 = Convert.ToInt32(Console.ReadLine());
             int result_4 = Summ(n_3);
-            Console.WriteLine($"Сумма чисел от 1 до {n} = {result_4}");
+            Console.WriteLine($"Сумма чисел от 1 до {n_3} = {result_4}");
         }
         static int ArithmProgression(int n)//арифметическая прогрессия
         {
