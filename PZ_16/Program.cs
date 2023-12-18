@@ -20,9 +20,9 @@ namespace PZ_16
         static byte enemies = 10; //количество врагов
         static byte buffs = 5; //количество усилений
         static int health = 5;  // количество аптечек
-        static int hp = 50;// здоровье игрока
-        static int dp = 5;// урон игрока
-        static int dmg = 5; // урон врага
+        static int healthPlayer = 50;// здоровье игрока
+        static int damagePlayer = 5;// урон игрока
+        static int damageEnemy = 5; // урон врага
         static int healthEnemies = 15; // здоровье врага
         static int countWithBuff = 0;// шаги под баффом
         static bool buffOn = false;
@@ -32,15 +32,15 @@ namespace PZ_16
         static List<int> enemyX = new List<int>();//координаты для врагов
         static List<int> enemyY = new List<int>();
         // для проверки сколько осталось врагов для отбражения их на карте
-        static int kolEnemyForList = 0;
+        static int numberOfEnemyForList = 0;
 
         static List<int> buffsX = new List<int>();//координаты для баффов
         static List<int> buffsY = new List<int>();
-        static int kolBuffForList = 0;
+        static int numberOfBuffsForList = 0;
 
         static List<int> healthX = new List<int>();//координаты для хилок
         static List<int> healthY = new List<int>();
-        static int kolHealthForList = 0;
+        static int numberOfHealthForList = 0;
         static int Count = 0; // бафф
         static void Main(string[] args)
         {
@@ -65,15 +65,15 @@ namespace PZ_16
                     playerY = mapSize / 2;
                     playerX = mapSize / 2;
                     Count = 0;
-                    hp = 50;
-                    dp = 10;
+                    healthPlayer = 50;
+                    damagePlayer = 10;
                     enemies = 10;
                     buffs = 5;
                     countWithBuff = 0;
                     health = 5;
-                    kolEnemyForList = 0;
-                    kolBuffForList = 0;
-                    kolHealthForList = 0;
+                    numberOfEnemyForList = 0;
+                    numberOfBuffsForList = 0;
+                    numberOfHealthForList = 0;
                     winPoint = enemies;
                     Text();
                     GenerationMap();
@@ -121,7 +121,7 @@ namespace PZ_16
                 {
                     enemyX.Add(x);
                     enemyY.Add(y);
-                    kolEnemyForList++;
+                    numberOfEnemyForList++;
                     map[x, y] = 'E';
                     enemies--; //при добавлении врагов уменьшается количество нерасставленных врагов
                 }
@@ -136,7 +136,7 @@ namespace PZ_16
                 {
                     buffsX.Add(x);
                     buffsY.Add(y);
-                    kolBuffForList++;
+                    numberOfBuffsForList++;
                     map[x, y] = 'B';
                     buffs--;
                 }
@@ -151,7 +151,7 @@ namespace PZ_16
                 {
                     healthX.Add(x);
                     healthY.Add(y);
-                    kolHealthForList++;
+                    numberOfHealthForList++;
                     map[x, y] = 'H';
                     health--;
                 }
@@ -326,7 +326,7 @@ namespace PZ_16
                         countWithBuff++;
                     }
                 }
-                if (hp <= 0)//проигрыш
+                if (healthPlayer <= 0)//проигрыш
                 {
                     End();
                 }
@@ -354,9 +354,9 @@ namespace PZ_16
                             enemies = 10; //количество врагов
                             buffs = 5; //количество усилений
                             health = 5;  // количество аптечек
-                            hp = 50;//здоровье игрока
-                            dmg = 10;
-                            dp = 5;//здоровье игрока
+                            healthPlayer = 50;//здоровье игрока
+                            damageEnemy = 10;
+                            damagePlayer = 5;//здоровье игрока
                             countWithBuff = 0;//здоровье игрока
                             buffOn = false;
                             Count = 0;
@@ -403,12 +403,12 @@ namespace PZ_16
             {
                 if (playerY == enemyY[i] && playerX == enemyX[i])
                 {
-                    hp -= dmg;
+                    healthPlayer -= damageEnemy;
                     Text();
                     Count--;
                     enemyY.RemoveAt(i);
                     enemyX.RemoveAt(i);
-                    kolEnemyForList--;
+                    numberOfEnemyForList--;
                     winPoint--;
                 }
             }
@@ -418,23 +418,23 @@ namespace PZ_16
                 {
                     buffsX.RemoveAt(i);
                     buffsY.RemoveAt(i);
-                    kolBuffForList--;
+                    numberOfBuffsForList--;
                     countWithBuff += 20;
                     Text();
                     Count--;
                     if (countWithBuff > 0)
                     {
                         buffOn = true;
-                        dmg = 5;
-                        dp = 10;
+                        damageEnemy = 5;
+                        damagePlayer = 10;
                     }
                 }
             }
             if (countWithBuff == 0)
             {
                 buffOn = false;
-                dmg = 15;
-                dp = 5;
+                damageEnemy = 15;
+                damagePlayer = 5;
             }
             if (buffOn == true)
             {
@@ -446,12 +446,12 @@ namespace PZ_16
             {
                 if (playerY == healthY[i] && playerX == healthX[i])
                 {
-                    hp = 50;
+                    healthPlayer = 50;
                     Text();
                     Count--;
                     healthX.RemoveAt(i);
                     healthY.RemoveAt(i);
-                    kolHealthForList--;
+                    numberOfHealthForList--;
                 }
             }
         }
@@ -460,10 +460,10 @@ namespace PZ_16
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.SetCursorPosition(0, mapSize);
-                Console.WriteLine($"Здоровье: {hp}" + " ");
+                Console.WriteLine($"Здоровье: {healthPlayer}" + " ");
                 Console.WriteLine($"Шагов пройдено: {Count}" + " ");
-                Console.WriteLine($"Сила удара: {dp}" + " ");
-                Console.WriteLine($"Враги: {kolEnemyForList}" + " ");
+                Console.WriteLine($"Сила удара: {damagePlayer}" + " ");
+                Console.WriteLine($"Враги: {numberOfEnemyForList}" + " ");
                 Console.ResetColor();
             }
         static void Menu()
@@ -492,12 +492,12 @@ namespace PZ_16
                         playerY = mapSize / 2;   //координаты на карте игрока
                         playerX = mapSize / 2;
                         Count = 0; // шаг
-                        hp = 50; // здоровье игрока
-                        dp = 10; // урон игрока
+                        healthPlayer = 50; // здоровье игрока
+                        damagePlayer = 10; // урон игрока
                         enemies = 10; //количество врагов
-                        kolEnemyForList = 0; //количество врагов в данный мамент
-                        kolBuffForList = 0;
-                        kolHealthForList = 0;
+                        numberOfEnemyForList = 0; //количество врагов в данный мамент
+                        numberOfBuffsForList = 0;
+                        numberOfHealthForList = 0;
                         buffs = 5; //количество усилений
                         health = 5; // количество аптечек
                         winPoint = enemies;
@@ -550,12 +550,12 @@ namespace PZ_16
                         playerY = mapSize / 2;
                         playerX = mapSize / 2;
                         Count = 0; // шаг
-                        hp = 50; // жизни игрока
-                        dp = 10; // урон игрока
+                        healthPlayer = 50; // жизни игрока
+                        damagePlayer = 10; // урон игрока
                         enemies = 10; //количество врагов
-                        kolEnemyForList = 0; //количество врагов в данный мамент
-                        kolBuffForList = 0;
-                        kolHealthForList = 0;
+                        numberOfEnemyForList = 0; //количество врагов в данный мамент
+                        numberOfBuffsForList = 0;
+                        numberOfHealthForList = 0;
                         countWithBuff = 0;
                         buffs = 5; //количество усилений
                         health = 5; // количество аптечек
@@ -602,12 +602,12 @@ namespace PZ_16
                         playerY = mapSize / 2;
                         playerX = mapSize / 2;
                         Count = 0; // шаг
-                        hp = 50; // жизни игрока
-                        dp = 10; // урон игрока
+                        healthPlayer = 50; // жизни игрока
+                        damagePlayer = 10; // урон игрока
                         enemies = 10; //количество врагов
-                        kolEnemyForList = 0; //количество врагов в данный мамент
-                        kolBuffForList = 0;
-                        kolHealthForList = 0;
+                        numberOfEnemyForList = 0; //количество врагов в данный мамент
+                        numberOfBuffsForList = 0;
+                        numberOfHealthForList = 0;
                         countWithBuff = 0;
                         buffs = 5; //количество усилений
                         health = 5; // количество аптечек
@@ -655,9 +655,9 @@ namespace PZ_16
                         enemies = 10; //количество врагов
                         buffs = 5; //количество усилений
                         health = 5;  // количество аптечек
-                        hp = 50;//здоровье игрока
-                        dmg = 10;
-                        dp = 5;//здоровье игрока
+                        healthPlayer = 50;//здоровье игрока
+                        damageEnemy = 10;
+                        damagePlayer = 5;//здоровье игрока
                         countWithBuff = 0;//здоровье игрока
                         buffOn = false;
                         Count = 0;
@@ -693,15 +693,15 @@ namespace PZ_16
                         writer.WriteLine(enemies);
                         writer.WriteLine(buffs);
                         writer.WriteLine(health);
-                        writer.WriteLine(hp);
-                        writer.WriteLine(dmg);
-                        writer.WriteLine(dp);
+                        writer.WriteLine(healthPlayer);
+                        writer.WriteLine(damageEnemy);
+                        writer.WriteLine(damagePlayer);
                         writer.WriteLine(countWithBuff);
                         writer.WriteLine(Count);
                         writer.WriteLine(winPoint);
-                        writer.WriteLine(kolEnemyForList);
-                        writer.WriteLine(kolHealthForList);
-                        writer.WriteLine(kolBuffForList);
+                        writer.WriteLine(numberOfEnemyForList);
+                        writer.WriteLine(numberOfHealthForList);
+                        writer.WriteLine(numberOfBuffsForList);
                     }
                 }
                 using (FileStream file2 = new FileStream(path2 + ".txt", FileMode.OpenOrCreate, FileAccess.ReadWrite))
@@ -743,15 +743,15 @@ namespace PZ_16
                             enemies = byte.Parse(line[2]);
                             buffs = byte.Parse(line[3]);
                             health = int.Parse(line[4]);
-                            hp = int.Parse(line[5]);
-                            dmg = int.Parse(line[6]);
-                            dp = int.Parse(line[7]);
+                            healthPlayer = int.Parse(line[5]);
+                            damageEnemy = int.Parse(line[6]);
+                            damagePlayer = int.Parse(line[7]);
                             countWithBuff = int.Parse(line[8]);
                             Count = int.Parse(line[9]);
                             winPoint = int.Parse(line[10]);
-                            kolEnemyForList = int.Parse(line[11]);
-                            kolHealthForList = int.Parse(line[12]);
-                            kolBuffForList = int.Parse(line[13]);
+                            numberOfEnemyForList = int.Parse(line[11]);
+                            numberOfHealthForList = int.Parse(line[12]);
+                            numberOfBuffsForList = int.Parse(line[13]);
 
                         }
                     }
@@ -768,34 +768,34 @@ namespace PZ_16
                             buffsY.Clear();
                             healthX.Clear();
                             healthY.Clear();
-                            for (int i = 0; i < kolEnemyForList; i++)//враги
+                            for (int i = 0; i < numberOfEnemyForList; i++)//враги
                             {
                                 enemyX.Add(int.Parse(units[count]));
                                 count++;
                             }
-                            for (int i = 0; i < kolEnemyForList; i++)
+                            for (int i = 0; i < numberOfEnemyForList; i++)
                             {
                                 enemyY.Add(int.Parse(units[count]));
                                 count++;
                             }
 
-                            for (int i = 0; i < kolHealthForList; i++)//аптечка
+                            for (int i = 0; i < numberOfHealthForList; i++)//аптечка
                             {
                                 healthX.Add(int.Parse(units[count]));
                                 count++;
                             }
-                            for (int i = 0; i < kolHealthForList; i++)
+                            for (int i = 0; i < numberOfHealthForList; i++)
                             {
                                 healthY.Add(int.Parse(units[count]));
                                 count++;
                             }
 
-                            for (int i = 0; i < kolBuffForList; i++)//баффы
+                            for (int i = 0; i < numberOfBuffsForList; i++)//баффы
                             {
                                 buffsX.Add(int.Parse(units[count]));
                                 count++;
                             }
-                            for (int i = 0; i < kolBuffForList; i++)
+                            for (int i = 0; i < numberOfBuffsForList; i++)
                             {
                                 buffsY.Add(int.Parse(units[count]));
                                 count++;
@@ -814,15 +814,15 @@ namespace PZ_16
                                     }
                                 }
                             }
-                            for (int i = 0; i < kolEnemyForList; i++)
+                            for (int i = 0; i < numberOfEnemyForList; i++)
                             {
                                 map[enemyX[i], enemyY[i]] = 'E';
                             }
-                            for (int i = 0; i < kolBuffForList; i++)
+                            for (int i = 0; i < numberOfBuffsForList; i++)
                             {
                                 map[buffsX[i], buffsY[i]] = 'B';
                             }
-                            for (int i = 0; i < kolHealthForList; i++)
+                            for (int i = 0; i < numberOfHealthForList; i++)
                             {
                                 map[healthX[i], healthY[i]] = 'H';
                             }
