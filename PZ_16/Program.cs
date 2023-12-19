@@ -23,10 +23,9 @@ namespace PZ_16
         static int healthPlayer = 50;// здоровье игрока
         static int damagePlayer = 5;// урон игрока
         static int damageEnemy = 5; // урон врага
-        static int healthEnemies = 15; // здоровье врага
+        //static int healthEnemies = 15; - здоровье врага
         static int countWithBuff = 0;// шаги под баффом
         static bool buffOn = false;
-        static bool game = true;
         static int winPoint = enemies;
 
         static List<int> enemyX = new List<int>();//координаты для врагов
@@ -419,7 +418,7 @@ namespace PZ_16
                     buffsX.RemoveAt(i);
                     buffsY.RemoveAt(i);
                     numberOfBuffsForList--;
-                    countWithBuff += 20;
+                    countWithBuff = 21;
                     Text();
                     Count--;
                     if (countWithBuff > 0)
@@ -529,7 +528,7 @@ namespace PZ_16
                         Menu();
                         break;
                 }
-            }// пауза
+            }
         static void Win()
             {
                 Console.Clear();
@@ -635,49 +634,6 @@ namespace PZ_16
                         break;
                 }
             }
-        static void StartGame()
-            {
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.SetCursorPosition(40, 15);
-                Console.WriteLine("N - Новая игра");
-                Console.SetCursorPosition(40, 16);
-                Console.WriteLine("Z - Загрузить последнее сохранение");
-                Console.ResetColor();
-
-                switch (Console.ReadKey().Key)
-                {
-                    case ConsoleKey.N:
-                        mapSize = 25; //размер карты
-                        map = new char[mapSize, mapSize]; //карта
-                        playerY = mapSize / 2;//координаты на карте игрока
-                        playerX = mapSize / 2;
-                        enemies = 10; //количество врагов
-                        buffs = 5; //количество усилений
-                        health = 5;  // количество аптечек
-                        healthPlayer = 50;//здоровье игрока
-                        damageEnemy = 10;
-                        damagePlayer = 5;//здоровье игрока
-                        countWithBuff = 0;//здоровье игрока
-                        buffOn = false;
-                        Count = 0;
-                        GenerationMap();
-                        Text();
-                        Move();
-                        break;
-                    case ConsoleKey.Z:
-                        Console.Clear();
-                        Console.SetCursorPosition(40, 15);
-                        Console.Write("Название: ");
-                        map[playerY, playerX] = '_';
-                        Load();
-                        break;
-                    default:
-                        StartGame();
-                        break;
-                }
-
-            }//старт игры - новая или восстановление
         static void Save()
             {
                 Console.CursorVisible = true;
@@ -849,11 +805,11 @@ namespace PZ_16
                     {
                         case ConsoleKey.Q:
                             Console.Clear();
-                            StartGame();
+                            HomeScreen();
                             break;
                         default:
                             Console.Clear();
-                            StartGame();
+                            HomeScreen();
                             break;
                     }
                 }
